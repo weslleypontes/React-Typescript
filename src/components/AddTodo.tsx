@@ -9,14 +9,14 @@ const schema = yup.object().shape({
     title: yup.string().required('Tarefa inválida'),
 });
 
-interface AddTodoForm{
+type AddTodoForm = {
     title: string
 }
 
 const AddTodo = () => {
 
     const { addTodo } = useContext<TodoContextType>(TodoContext);
-    const { register, handleSubmit, formState:{errors}} = useForm({
+    const { register, handleSubmit, formState:{errors}} = useForm<AddTodoForm>({
         resolver: yupResolver(schema),
     });
 
@@ -26,8 +26,8 @@ const AddTodo = () => {
         window.location.href = '/';
     }
 
-    return (
-        <form onSubmit={handleSubmit<AddTodoForm >(onSubmit)}>
+    return ( 
+        <form onSubmit={handleSubmit(onSubmit)}>
             <h4>Nova tarefa</h4>
             <div className="uk-margin uk-width-1-1">
                 <input type="text" name="title" id="title" placeholder="Nova tarefa..." className="uk-input" ref={register.name} />
